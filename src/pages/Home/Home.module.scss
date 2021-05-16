@@ -1,0 +1,44 @@
+@import '../../varibales.scss';
+
+.root {
+    min-height: 100vh;
+    background: linear-gradient(180deg, $third 0%, $primary 100%);
+    display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.contentWrap {
+  width: 100%;
+  max-width: 1125px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.contentText {
+  padding: 50px 20px;
+  min-width: 506px;
+}
+
+.home__parallax {
+  margin: 67px 0 0 0;
+}
+
+.title {
+  font-weight: 400;
+  font-size: 72px;
+  line-height: 84px;
+  letter-spacing: 4px;
+}
+
+.text {
+  font-size: 36px;
+line-height: 42px;
+}
+
+.text_love {
+  font-size: 24px;
+    line-height: 28px;
+    text-align: end;
+}
