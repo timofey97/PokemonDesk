@@ -1,47 +1,47 @@
 @import '../../varibales.scss';
 
 .root {
-    height: 93px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0px 4px 16px rgba(1, 28, 64, 0.2);
+  background: #f5db13;
+  height: 93px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 16px rgba(1, 28, 64, 0.2);
 }
 
 .wrap {
-    width: 100%;
-    max-width: 1125px;
-    height: 63px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  width: 100%;
+  max-width: 1125px;
+  height: 63px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .pokemonLogo {
-    width: 158px;
-    height: 63px;
+  width: 158px;
+  height: 63px;
 }
 
 .menuWrap {
-    display: flex;
-    align-items: center;
-    max-width: 658px;
-    width: 100%;
-    justify-content: space-between;
-
+  display: flex;
+  align-items: center;
+  max-width: 658px;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .menuLink {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 25px;
-    line-height: 29px;
-    color: $dark;
-    text-decoration: none;
-    position: relative;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 25px;
+  line-height: 29px;
+  color: $dark;
+  text-decoration: none;
+  position: relative;
 
-     &:after {
-    content: "";
+  &:after {
+    content: '';
     display: block;
     position: absolute;
     bottom: -8px;
@@ -53,7 +53,7 @@
     opacity: 0;
     left: 50%;
     transform: translate(-50%, 0);
-    transition: opacity, width ease-in-out .25s;
+    transition: opacity, width ease-in-out 0.25s;
   }
 
   &:hover,
