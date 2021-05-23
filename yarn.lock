@@ -1102,7 +1102,7 @@
 
 "@types/hookrouter@^2.2.5":
   version "2.2.5"
-  resolved "https://registry.yarnpkg.com/@types/hookrouter/-/hookrouter-2.2.5.tgz#f04dafd1e073da01ba85f79100c41de530969cea"
+  resolved "https://registry.npmjs.org/@types/hookrouter/-/hookrouter-2.2.5.tgz"
   integrity sha512-uesCRVHgugHtpfdtXWcNH60gCvn7qwQVap6s2KtHRZ8uhDJear8osTmgImATc5aOUC6iNWJzeYMSvGUc/lFf2A==
   dependencies:
     "@types/react" "*"
@@ -4234,7 +4234,7 @@ homedir-polyfill@^1.0.1:
 
 hookrouter@1.2.3:
   version "1.2.3"
-  resolved "https://registry.yarnpkg.com/hookrouter/-/hookrouter-1.2.3.tgz#a65599a1be376b51734caf7c4f7f8aba59bb2c77"
+  resolved "https://registry.npmjs.org/hookrouter/-/hookrouter-1.2.3.tgz"
   integrity sha512-n0mqEBGgXIxYRNMHlwCzoyTOk0OB5Es3jwUyA3+2l5nte/52n0CMMj1bmoCabC8K43YTUEr0zzexTBfo//tq2Q==
 
 hosted-git-info@^2.1.4:
@@ -7805,7 +7805,7 @@ url-parse@^1.4.3:
 
 url@^0.11.0:
   version "0.11.0"
-  resolved "https://registry.npmjs.org/url/-/url-0.11.0.tgz"
+  resolved "https://registry.yarnpkg.com/url/-/url-0.11.0.tgz#3838e97cfc60521eb73c525a8e55bfdd9e2e28f1"
   integrity sha1-ODjpfPxgUh63PFJajlW/3Z4uKPE=
   dependencies:
     punycode "1.3.2"
