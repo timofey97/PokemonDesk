@@ -7,7 +7,6 @@ interface CssExports {
   'home__parallax': string;
   'root': string;
   'text': string;
-  'text_love': string;
   'title': string;
 }
 export const cssExports: CssExports;
