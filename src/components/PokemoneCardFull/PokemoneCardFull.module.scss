@@ -1,3 +1,7 @@
+.overlay {
+  background: #212121;opacity: 0.5; z-index: 100; width: 100vw;position: absolute; height: 100vh; 
+}
+
 .root {
   width: 800px;
   height: 371px;
@@ -7,7 +11,9 @@
   position: relative;
   margin: 0 auto;
   display: flex;
+  align-self: center;
   transition: all ease-in-out 0.15s;
+  z-index: 120;
 }
 
 .leftSide {
@@ -15,6 +21,7 @@
   position: relative;
   box-shadow: 4px 4px 8px rgba(1, 28, 64, 0.2);
   display: flex;
+  background: #F6F7F9;
 }
 
 .rightSide {

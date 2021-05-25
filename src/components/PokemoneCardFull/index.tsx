@@ -26,8 +26,10 @@ const PokemonCardFull: React.FC<PokemonProps> = ({ id = '1050' }) => {
   }
 
   return (
-    <div className={s.root}>
-      <div className={cn(s.leftSide, s[data?.types[0] as keyof typeof s])}>
+    <>
+    <div class={s.overlay}> </div>
+    <div className={cn(s.root,  s[data?.types[0] as keyof typeof s])}>
+      <div className={cn(s.leftSide)}>
         <div className={cn(s.labelWrap)}>
           {data?.types.map((type: string) => (
             <span key={type} className={cn(s.label, s[type as keyof typeof s])}>
@@ -88,7 +90,9 @@ const PokemonCardFull: React.FC<PokemonProps> = ({ id = '1050' }) => {
         </div>
       </div>
     </div>
+    </>
   );
+  
 };
 
 export default PokemonCardFull;
