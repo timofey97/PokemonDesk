@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'react';
 import { EnumEndpoint } from '../config';
-import { iPokemonData, IPokemonHook } from '../pages/Pokedex';
 import req from '../utils/request';
 
-const usePokemons = (endpoint: EnumEndpoint): IPokemonHook => {
-  const [data, setData] = useState<iPokemonData>({} as iPokemonData);
+const useData = <T>(endpoint: EnumEndpoint, query: object, deps: any[] = []) => {
+  const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLodaing] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
 
   useEffect(() => {
-    const getPokemons = async () => {
+    const getData = async (): Promise<void> => {
       setIsLodaing(true);
       try {
-        const result = await req(endpoint);
+        const result = await req<T>(endpoint, query);
         setData(result);
       } catch (e) {
         setIsError(true);
@@ -21,9 +20,8 @@ const usePokemons = (endpoint: EnumEndpoint): IPokemonHook => {
       }
     };
 
-    getPokemons();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    getData();
+  }, deps);
 
   return {
     data,
@@ -32,4 +30,4 @@ const usePokemons = (endpoint: EnumEndpoint): IPokemonHook => {
   };
 };
 
-export default usePokemons;
+export default useData;

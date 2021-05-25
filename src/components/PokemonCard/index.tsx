@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import cn from 'classnames';
 import Heading from '../Heading';
@@ -10,11 +11,16 @@ interface IPokemonCardProps {
   defense: string | number;
   types: string[];
   image: string;
+  pr: number;
+  onCardClick: any;
 }
 
-const PokemonCard: React.FC<IPokemonCardProps> = ({ name, attack, defense, types, image }) => {
+// eslint-disable-next-line no-shadow
+const PokemonCard: React.FC<IPokemonCardProps> = ({ pr = '1', name, attack, defense, types, image, onCardClick }) => {
   return (
-    <div className={s.root}>
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    <div className={s.root} onClick={() => onCardClick(pr)}>
       <div className={s.infoWrap}>
         <Heading type="h4" margin className={s.titleName}>
           {name}
@@ -35,7 +41,6 @@ const PokemonCard: React.FC<IPokemonCardProps> = ({ name, attack, defense, types
               {type}
             </span>
           ))}
-          <span className={s.label}>Fire</span>
         </div>
       </div>
       <div className={cn(s.pictureWrap, s[types[0] as keyof typeof s])}>
@@ -46,3 +51,6 @@ const PokemonCard: React.FC<IPokemonCardProps> = ({ name, attack, defense, types
 };
 
 export default PokemonCard;
+function onCardClick(pr: string | number): void {
+  throw new Error('Function not implemented.');
+}
