@@ -3,10 +3,10 @@ import config from '../config';
 
 import getUrlWithParamsConfig from './getUrlWithParamsConfig';
 
-async function req(endpoint: keyof typeof config.client.endpoint) {
-  const uri: string = Url.format(getUrlWithParamsConfig(endpoint));
-  // eslint-disable-next-line no-return-await
-  return await fetch(uri).then((res) => res.json());
+async function req<T>(endpoint: keyof typeof config.client.endpoint, query: object): Promise<T> {
+  const uri: string = Url.format(getUrlWithParamsConfig(endpoint, query));
+  const t = await fetch(uri).then((res) => res.json());
+  return t;
 }
 
 export default req;

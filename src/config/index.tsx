@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-shadow
 export enum EnumEndpoint {
   getPokemons,
-  getOther,
+  getPokemon,
 }
 
 interface IEndpoint {
@@ -36,10 +36,10 @@ export const config: IConfig = {
           pathname: '/api/v1/pokemons',
         },
       },
-      [EnumEndpoint.getOther]: {
+      [EnumEndpoint.getPokemon]: {
         method: 'GET',
         uri: {
-          pathname: '/api/v1/pokemons',
+          pathname: '/api/v1/pokemon/{id}',
         },
       },
     },

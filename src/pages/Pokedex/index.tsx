@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
-import React from 'react';
+import React, { useState } from 'react';
 import cn from 'classnames';
+import { navigate } from 'hookrouter';
 
 import Footer from '../../components/Footer';
 import Layout from '../../components/Layout';
@@ -9,53 +10,33 @@ import Heading from '../../components/Heading';
 
 import s from './Pokedex.module.scss';
 import { EnumEndpoint } from '../../config';
-import usePokemons from '../../hook/getPokemons';
+import useData from '../../hook/getData';
 
-interface IStats {
-  hp: number;
-  attack: number;
-  defense: number;
-  'special-attack': number;
-  'special-defense': number;
-  speed: number;
-}
+import { Ipokemon, iPokemonData } from '../../interface/pokemons';
+import useDebounce from '../../hook/useDebounce';
 
-interface IPokemon {
-  img: string;
-  name_clean: string;
-  abilities: string[];
-  stats: IStats;
-  types: string[];
-  image: string;
-  name: string;
-  base_experience: number;
-  height: number;
-  id: number;
-  is_default: boolean;
-  order: number;
-  weight: number;
-}
-
-export interface iPokemonData {
-  count: number;
-  limit: number;
-  offset: number;
-  totalPokemons: number;
-  pokemons: IPokemon[];
-}
-
-export interface IPokemonHook {
-  data: iPokemonData;
-  isLoading: boolean;
-  isError: boolean;
+interface Iquery {
+  name?: string;
 }
 
 const PokedexPage: React.FC = () => {
-  const { data, isLoading, isError } = usePokemons(EnumEndpoint.getOther);
+  const [searchValue, setSearchValue] = useState('');
+  const [query, setQuery] = useState<Iquery>({});
+  const debouncedValue = useDebounce(searchValue, 500);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  const { data, isLoading, isError } = useData<iPokemonData>(EnumEndpoint.getPokemons, query, [debouncedValue]);
+
+  const hadleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+    setQuery((state: Iquery) => ({
+      ...state,
+      name: e.target.value,
+    }));
+  };
+
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
 
   if (isError) {
     return (
@@ -70,22 +51,31 @@ const PokedexPage: React.FC = () => {
     <div className={s.root}>
       <Layout>
         <Heading type="h1">
-          {data?.totalPokemons} <b>Pokemons</b> for you to choose your favorite
+          {!isLoading && data?.total} <b>Pokemons</b> for you to choose your favorite
         </Heading>
         <div className={s.seachWrap}>
-          <input type="text" className={s.searchInput} placeholder="Find your pokémon..." />
+          <input
+            type="text"
+            className={s.searchInput}
+            placeholder="Find your pokémon..."
+            value={searchValue}
+            onChange={hadleSearchChange}
+          />
         </div>
         <div className={cn(s.content)}>
-          {data?.pokemons.map((pokemonData: IPokemon) => (
-            <PokemonCard
-              name={pokemonData.name_clean}
-              attack={pokemonData.stats.attack}
-              defense={pokemonData.stats.defense}
-              image={pokemonData.img}
-              types={pokemonData.types}
-              key={pokemonData.id}
-            />
-          ))}
+          {!isLoading &&
+            data?.pokemons.map((pokemonData: Ipokemon) => (
+              <PokemonCard
+                name={pokemonData.name_clean}
+                attack={pokemonData.stats.attack}
+                defense={pokemonData.stats.defense}
+                image={pokemonData.img}
+                types={pokemonData.types}
+                key={pokemonData.id}
+                pr={pokemonData.id}
+                onCardClick={(id: number) => navigate(`/pokedex/${id}`, false)}
+              />
+            ))}
         </div>
       </Layout>
       <Footer />

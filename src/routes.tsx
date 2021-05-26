@@ -1,12 +1,13 @@
 /* eslint-disable no-shadow */
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import Pokedex from './pages/Pokedex';
 import HomePage from './pages/Home';
+import PokemonCardFull, { PokemonProps } from './components/PokemoneCardFull';
 
 interface IGeneralMenu {
   title: string;
   link: LinkEnum;
-  component: () => JSX.Element;
+  component: (props: PropsWithChildren<any>) => JSX.Element;
 }
 
 export enum LinkEnum {
@@ -14,6 +15,7 @@ export enum LinkEnum {
   POKEDEX = '/pokedex',
   LEGENDARIES = '/legendaries',
   DOCUMENTATION = '/documentation',
+  POKEMON = '/pokedex/:id',
 }
 
 export const GENERAL_MENU: IGeneralMenu[] = [
@@ -38,10 +40,15 @@ export const GENERAL_MENU: IGeneralMenu[] = [
     link: LinkEnum.DOCUMENTATION,
     component: () => <Pokedex />,
   },
+  {
+    title: 'Pokemon',
+    link: LinkEnum.POKEMON,
+    component: ({ id }: PokemonProps) => <PokemonCardFull id={id} />,
+  },
 ];
 
 interface IAccMenu {
-  [n: string]: () => JSX.Element;
+  [n: string]: (props: PropsWithChildren<any>) => JSX.Element;
 }
 
 const routes = GENERAL_MENU.reduce((acc: IAccMenu, item: IGeneralMenu) => {
