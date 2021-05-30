@@ -4,6 +4,7 @@ interface CssExports {
   'ExperienceValue': string;
   'abilityValue': string;
   'abilityWrap': string;
+  'active': string;
   'bug': string;
   'dark': string;
   'dragon': string;

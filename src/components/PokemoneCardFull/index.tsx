@@ -2,33 +2,31 @@ import React from 'react';
 import cn from 'classnames';
 
 import s from './PokemoneCardFull.module.scss';
-import useData from '../../hook/getData';
 import { Ipokemon } from '../../interface/pokemons';
-import { EnumEndpoint } from '../../config';
 import ProgressBar from '../ProgressBar';
+import toCapitalizeFirstLetter from '../../utils/toCapitalizeFirstLetter';
 
 export interface PokemonProps {
-  id: string | number;
+  data:  Ipokemon;
+  active: boolean | null;
+  setActive: any;
 }
 
-const PokemonCardFull: React.FC<PokemonProps> = ({ id = '1050' }) => {
-  const { data, isLoading } = useData<Ipokemon | null>(EnumEndpoint.getPokemon, { id });
+const PokemonCardFull: React.FC<PokemonProps> = ({ data , active, setActive}) => {
 
-  // eslint-disable-next-line no-shadow
-  const ucFirst = (s: any) => s[0].toUpperCase() + s.slice(1);
-
-  const styleElem = document.head.appendChild(document.createElement('style'));
-
-  styleElem.innerHTML = '#theDiv:before {background: black;}';
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   return (
-    <>
-    <div class={s.overlay}> </div>
-    <div className={cn(s.root,  s[data?.types[0] as keyof typeof s])}>
+    <div role='button' 
+    tabIndex={0}
+    className={active ? cn(s.overlay, s.active) : s.overlay} 
+    onClick={() => setActive(false)}
+    onKeyDown={() => setActive(false)}> 
+    <div 
+    role='button'
+    tabIndex={0}
+     className={cn(s[data?.types[0] as keyof typeof s], active ? cn(s.root, s.active) : s.root)}
+    onClick={e => e.stopPropagation()}
+    onKeyDown={e => e.stopPropagation()}>
       <div className={cn(s.leftSide)}>
         <div className={cn(s.labelWrap)}>
           {data?.types.map((type: string) => (
@@ -44,7 +42,7 @@ const PokemonCardFull: React.FC<PokemonProps> = ({ id = '1050' }) => {
 
       <div className={s.rightSide}>
         <div className={s.titleWrap}>
-          <div className={s.namewrap}>{ucFirst(data?.name_clean)}</div>
+          <div className={s.namewrap}>{toCapitalizeFirstLetter(data?.name_clean)}</div>
           <div className={s.generationWrap}>Generation 1</div>
           <div className={s.generationValue}>{data?.weight}</div>
         </div>
@@ -52,7 +50,7 @@ const PokemonCardFull: React.FC<PokemonProps> = ({ id = '1050' }) => {
           Abilities
           <div className={s.abilityValue}>
             {' '}
-            {ucFirst(data?.abilities[0])} - {ucFirst(data?.abilities[1])}{' '}
+            {(data?.abilities[0])} - {(data?.abilities[1])}{' '}
           </div>
         </div>
         <div className={s.helthyandexpWrap}>
@@ -66,7 +64,6 @@ const PokemonCardFull: React.FC<PokemonProps> = ({ id = '1050' }) => {
             Experience
             <div className={s.ExperienceValue}>{data?.base_experience}</div>
             <ProgressBar bgcolor="#F5DB13" completed={data?.base_experience} />
-            {/* <div className={s.expProgress}  /> */}
           </div>
         </div>
         <div className={s.statWrap}>
@@ -90,9 +87,10 @@ const PokemonCardFull: React.FC<PokemonProps> = ({ id = '1050' }) => {
         </div>
       </div>
     </div>
-    </>
+    </div>
+
   );
   
 };
 
-export default PokemonCardFull;
+export default React.memo(PokemonCardFull);
