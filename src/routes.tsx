@@ -2,7 +2,7 @@
 import React, { PropsWithChildren } from 'react';
 import Pokedex from './pages/Pokedex';
 import HomePage from './pages/Home';
-import PokemonCardFull, { PokemonProps } from './components/PokemoneCardFull';
+// import PokemonCardFull, { PokemonProps } from './components/PokemoneCardFull';
 
 interface IGeneralMenu {
   title: string;
@@ -15,7 +15,7 @@ export enum LinkEnum {
   POKEDEX = '/pokedex',
   LEGENDARIES = '/legendaries',
   DOCUMENTATION = '/documentation',
-  POKEMON = '/pokedex/:id',
+  // POKEMON = '/pokedex/:id',
 }
 
 export const GENERAL_MENU: IGeneralMenu[] = [
@@ -40,11 +40,11 @@ export const GENERAL_MENU: IGeneralMenu[] = [
     link: LinkEnum.DOCUMENTATION,
     component: () => <Pokedex />,
   },
-  {
-    title: 'Pokemon',
-    link: LinkEnum.POKEMON,
-    component: ({ id }: PokemonProps) => <PokemonCardFull id={id} />,
-  },
+  // {
+  //   title: 'Pokemon',
+  //   link: LinkEnum.POKEMON,
+  //   component: ({ id }: PokemonProps) => <PokemonCardFull id={id} />,
+  // },
 ];
 
 interface IAccMenu {

@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
 import cn from 'classnames';
-import { navigate } from 'hookrouter';
 
 import Footer from '../../components/Footer';
 import Layout from '../../components/Layout';
@@ -14,18 +13,22 @@ import useData from '../../hook/getData';
 
 import { Ipokemon, iPokemonData } from '../../interface/pokemons';
 import useDebounce from '../../hook/useDebounce';
+import PokemonCardFull from '../../components/PokemoneCardFull';
 
 interface Iquery {
   name?: string;
 }
 
+
+
 const PokedexPage: React.FC = () => {
   const [searchValue, setSearchValue] = useState('');
   const [query, setQuery] = useState<Iquery>({});
   const debouncedValue = useDebounce(searchValue, 500);
+  const [modalActive, setModalActive] = useState(false);
+  const [dataModal, setDataModal] = useState<Ipokemon>() ;
 
   const { data, isLoading, isError } = useData<iPokemonData>(EnumEndpoint.getPokemons, query, [debouncedValue]);
-
   const hadleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
     setQuery((state: Iquery) => ({
@@ -73,14 +76,21 @@ const PokedexPage: React.FC = () => {
                 types={pokemonData.types}
                 key={pokemonData.id}
                 pr={pokemonData.id}
-                onCardClick={(id: number) => navigate(`/pokedex/${id}`, false)}
+                onCardClick={(id: number) => {
+                  const dataMa= data.pokemons.find(x => x.id ===id)
+                  setDataModal(dataMa); 
+                  setModalActive(true);
+                  
+                }}
               />
             ))}
         </div>
       </Layout>
       <Footer />
+      <PokemonCardFull data={dataModal} active={modalActive} setActive={setModalActive}/>
+      
     </div>
   );
 };
 
-export default PokedexPage;
+export default React.memo(PokedexPage);

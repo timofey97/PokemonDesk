@@ -4,7 +4,7 @@ import cn from 'classnames';
 import s from './Heading.module.scss';
 
 interface HeadingProps {
-  type: string | undefined;
+  type?: string | undefined;
   className?: string | undefined;
   margin?: boolean;
 }

@@ -4,6 +4,7 @@ import cn from 'classnames';
 import Heading from '../Heading';
 
 import s from './PokemonCard.module.scss';
+import toCapitalizeFirstLetter from '../../utils/toCapitalizeFirstLetter';
 
 interface IPokemonCardProps {
   name: string;
@@ -15,15 +16,17 @@ interface IPokemonCardProps {
   onCardClick: any;
 }
 
-// eslint-disable-next-line no-shadow
-const PokemonCard: React.FC<IPokemonCardProps> = ({ pr = '1', name, attack, defense, types, image, onCardClick }) => {
+const PokemonCard: React.FC<IPokemonCardProps> = ({ pr='1', name, attack, defense, types, image, onCardClick }) => {
   return (
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div className={s.root} onClick={() => onCardClick(pr)}>
+
+    <div role='button'
+    tabIndex={0}
+    className={s.root} 
+    onClick={() =>onCardClick(pr)
+    }>
       <div className={s.infoWrap}>
         <Heading type="h4" margin className={s.titleName}>
-          {name}
+          {toCapitalizeFirstLetter(name)}
         </Heading>
         <div className={s.statWrap}>
           <div className={s.statItem}>
@@ -51,6 +54,4 @@ const PokemonCard: React.FC<IPokemonCardProps> = ({ pr = '1', name, attack, defe
 };
 
 export default PokemonCard;
-function onCardClick(pr: string | number): void {
-  throw new Error('Function not implemented.');
-}
+

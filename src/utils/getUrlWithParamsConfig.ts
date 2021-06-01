@@ -4,9 +4,7 @@ function getUrlWithParamsConfig(endpointConfig: keyof typeof config.client.endpo
   const url = {
     ...config.client.server,
     ...config.client.endpoint[endpointConfig].uri,
-    query: {
-      ...query,
-    },
+    query: {},
   };
 
   const pathname = Object.keys(query).reduce((acc, val) => {
@@ -23,8 +21,6 @@ function getUrlWithParamsConfig(endpointConfig: keyof typeof config.client.endpo
   url.query = {
     ...query,
   };
-
-  console.log(url);
 
   return url;
 }
