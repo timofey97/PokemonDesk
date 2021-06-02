@@ -12,8 +12,11 @@
   "author": "timofey97 <gleb285@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@hapi/hapi": "^20.1.3",
+    "@hapi/inert": "^6.0.3",
     "@types/hookrouter": "^2.2.5",
     "classnames": "^2.3.1",
+    "handlebars": "^4.7.7",
     "hookrouter": "1.2.3",
     "path": "^0.12.7",
     "react": "^17.0.2",
@@ -22,9 +25,12 @@
   },
   "devDependencies": {
     "@svgr/webpack": "^5.5.0",
+    "@types/hapi__hapi": "^20.0.8",
+    "@types/hapi__inert": "^5.2.2",
     "@types/jest": "^26.0.23",
     "@types/react": "^17.0.5",
     "@types/react-dom": "^17.0.4",
+    "@types/webpack-node-externals": "^2.5.1",
     "@typescript-eslint/eslint-plugin": "4.6.0",
     "@typescript-eslint/parser": "4.6.0",
     "@webpack-cli/generators": "^2.1.0",
@@ -62,7 +68,8 @@
     "url-loader": "^4.1.1",
     "webpack": "^4.44.2",
     "webpack-cli": "3.3.12",
-    "webpack-dev-server": "3.11.0"
+    "webpack-dev-server": "3.11.0",
+    "webpack-node-externals": "^3.0.0"
   },
   "husky": {
     "hooks": {

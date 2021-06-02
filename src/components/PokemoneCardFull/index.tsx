@@ -12,7 +12,7 @@ export interface PokemonProps {
   setActive: any;
 }
 
-const PokemonCardFull: React.FC<PokemonProps> = ({ data , active, setActive}) => {
+const PokemonCardFull: React.FC<PokemonProps> = ({ data, active, setActive}) => {
 
 
   return (

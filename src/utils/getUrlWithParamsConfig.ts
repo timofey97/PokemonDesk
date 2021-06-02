@@ -8,7 +8,9 @@ function getUrlWithParamsConfig(endpointConfig: keyof typeof config.client.endpo
   };
 
   const pathname = Object.keys(query).reduce((acc, val) => {
+  
     if (acc.indexOf(`{${val}}`) !== -1) {
+      
       const result = acc.replace(`{${val}}`, query[val]);
       // eslint-disable-next-line no-param-reassign
       delete query[val];
