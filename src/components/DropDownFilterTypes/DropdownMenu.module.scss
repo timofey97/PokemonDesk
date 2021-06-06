@@ -1,0 +1,57 @@
+.typeSelect,
+.ataqueSelect {
+  width: 135px;
+}
+
+.selectBox {
+  position: relative;
+}
+
+.selectBox select {
+  text-align-last: center;
+  width: 100%;
+  font-family: 'Source Sans Pro';
+  font-size: 16px;
+  border: none;
+  background: #f2f2f2;
+  box-shadow: 2px 2px 2px rgb(33 33 33 / 10%);
+  border-radius: 4px;
+}
+
+.overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.checkboxes {
+  background: #f2f2f2;
+  position: absolute;
+  width: inherit;
+  margin-top: 8px;
+  z-index: 100;
+  box-shadow: 4px 4px 8px rgb(1 28 64 / 20%);
+  border-radius: 8px;
+  display: none;
+  flex-direction: column;
+  max-height: 194px;
+  flex-wrap: wrap;
+  width: 310px;
+  padding: 18px 18px 8px 32px;
+}
+
+.checkboxes label {
+  display: block;
+  margin-bottom: 8px;
+  margin-right: 10px;
+}
+
+.openCB {
+  display: flex !important;
+}
+
+.closeCB {
+  display: none;
+}

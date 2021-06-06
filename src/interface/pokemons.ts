@@ -10,29 +10,6 @@ export interface IStateRequest<T> {
   error: null | object;
 }
 
-//  export interface Stats {
-//         hp: number;
-//         attack: number;
-//         defense: number;
-//         'special-attack': number;
-//         'special-defense': number;
-//         speed: number;
-//     }
-//     export interface RootObject {
-//         name_clean: string;
-//         abilities: string[];
-//         stats: Stats;
-//         types: string[];
-//         img: string;
-//         name: string;
-//         base_experience: number;
-//         height: number;
-//         id: number;
-//         is_default: boolean;
-//         order: number;
-//         weight: number;
-//     }
-
 const PokemonsData = {
   name_clean: 'bulbasaur',
   abilities: ['overgrow', 'chlorophyll'],

@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 
@@ -17,28 +17,36 @@ import useData from '../../hook/getData';
 import { Ipokemon, iPokemonData } from '../../interface/pokemons';
 import useDebounce from '../../hook/useDebounce';
 import PokemonCardFull from '../../components/PokemoneCardFull';
-import toCapitalizeFirstLetter from '../../utils/toCapitalizeFirstLetter';
+import DropdownMenu from '../../components/DropDownFilterTypes';
+import Slider from '../../components/Slider';
+import { ReactComponent as Loading } from './assets/Loading.svg';
 
 interface Iquery {
   name?: string;
   limit?: number;
 }
 
-
 const PokedexPage: React.FC = () => {
   const dispatch = useDispatch();
   const typesPokemons = useSelector(getPokemonTypes);
   const isTypingLoading = useSelector(getPokemonTypesLoading);
   const [searchValue, setSearchValue] = useState('');
-  const [query, setQuery] = useState<Iquery>({ limit: 20 });
-  const debouncedValue = useDebounce(searchValue, 500);
+  const [typeValue, setTypeValue] = useState<string>('');
+  const [query, setQuery] = useState<Iquery>({ limit: 100 });
+
   const [modalActive, setModalActive] = useState(false);
   const [dataModal, setDataModal] = useState<Ipokemon>({} as Ipokemon);
-  const [expanded, setexpanded] = useState(false);
-  const [expanded2, setexpanded2] = useState(false);
-  // const [expanded3, setexpanded3] = useState(false)
+
+  
+  const [attackMinValue, setAttackMinValue] = useState<number>(0);
+  const [attackMaxValue, setAttackMaxValue] = useState<number>(200);
+  const [stateDropdownMenu, setStateDropdownMenu] = useState<boolean>(false);
+  const [stateSlider, setStateSlider] = useState<boolean>(false);
+  const debouncedValue = useDebounce(searchValue || typeValue || attackMinValue || attackMaxValue , 500);
 
   const { data, isLoading, isError } = useData<iPokemonData>(EnumEndpoint.getPokemons, query, [debouncedValue]);
+const [typesArray, setTypesArray] = useState(new Map());
+
   const hadleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
     setQuery((state: Iquery) => ({
@@ -46,12 +54,56 @@ const PokedexPage: React.FC = () => {
       name: e.target.value,
     }));
   };
+ console.log(attackMinValue)
+
+  const sliderAttackData = {
+    min: 0,
+    max: 200,
+    step: 1,
+    value: { min: attackMinValue, max: attackMaxValue },
+    label: 'Ataque',
+  };
+
+  const toggleHandler = (type: string, stateD: boolean) => {
+    console.log(type)
+    if (typesArray.has(type)) {
+      typesArray.delete(type);
+      setTypesArray(new Map(typesArray));
+    } else {
+      setTypesArray(new Map(typesArray.set(type, '')));
+    }
+    console.log(typesArray)
+    if (typeValue === type) {setTypeValue('')}
+    else {setTypeValue(type);}
+    setStateDropdownMenu(stateD);
+
+    const types = Array.from(typesArray.keys()).join('|');
+    console.log(types)
+    setQuery((state: Iquery) => ({
+      ...state,
+      types,
+    }));
+  };
+
   useEffect(() => {
     dispatch(getTypesAction());
   }, []);
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
+
+  const attackHandler = (dataa: any, stateS: boolean) => {
+    let { min, max } = dataa
+    if (min < 0) min = 0;
+    if (max > 200) max = 200;
+    setAttackMinValue(min);
+    setAttackMaxValue(max);
+    setStateSlider(stateS);
+
+    setQuery((state: Iquery) => ({
+      ...state,
+      attack_from: min,
+      attack_to: max,
+    }));
+    console.log(query)
+  };
 
   if (isError) {
     return (
@@ -78,48 +130,13 @@ const PokedexPage: React.FC = () => {
           />
         </div>
         <div className={s.filterBlock}>
-          <div className={s.typeSelect}>
-            <div className={s.selectBox} onClick={() => setexpanded(!expanded)}>
-              <select>
-                <option>Tipo</option>
-              </select>
-              <div className={s.overSelect} />
-            </div>
-            <div className={cn(expanded ? s.openCB : s.closeCB, s.checkboxes)}>
-              {isTypingLoading ? (
-                <div> is Loading</div>
-              ) : (
-                typesPokemons?.map((typeOne) => (
-                  <label htmlFor={typeOne} key={typeOne}>
-                    <input type="checkbox" id={typeOne} />
-                    {toCapitalizeFirstLetter(typeOne)}
-                  </label>
-                ))
-              )}
-            </div>
-          </div>
-          <div className={s.ataqueSelect}>
-            <div className={s.selectBox} onClick={() => setexpanded2(!expanded2)}>
-              <select>
-                <option>Ataque</option>
-              </select>
-              <div className={s.overSelect} />
-            </div>
-            <div className={cn(expanded2 ? s.openCB : s.closeCB, s.FromTo)}>
-              <div className={s.fromconatiner}>
-                From
-                <input type="text" name="from" id="from" />
-              </div>
-              <div className={s.arrowBtw} />
-              <div className="toconatiner">
-                To
-                <input type="text" name="to" id="to" />
-              </div>
-            </div>
-          </div>
+          {!isTypingLoading && <DropdownMenu types={typesPokemons} onToggle={toggleHandler} isActiveMenu={stateDropdownMenu} />}
+          <Slider data={sliderAttackData} onChange={attackHandler}  isActiveMenu={stateSlider}/>
         </div>
         <div className={cn(s.content)}>
-          {!isLoading &&
+          {/* {isLoading ? (
+            <Loading className={s.loader} />
+          ) : ( */
             data?.pokemons.map((pokemonData: Ipokemon) => (
               <PokemonCard
                 name={pokemonData.name_clean}
@@ -135,7 +152,8 @@ const PokedexPage: React.FC = () => {
                   setModalActive(true);
                 }}
               />
-            ))}
+            ))
+          }
         </div>
       </Layout>
       <Footer />
