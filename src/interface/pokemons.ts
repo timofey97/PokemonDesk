@@ -4,6 +4,12 @@ export interface iPokemonData {
   pokemons: Ipokemon[];
 }
 
+export interface IStateRequest<T> {
+  isLoading: boolean;
+  data: null | T[];
+  error: null | object;
+}
+
 //  export interface Stats {
 //         hp: number;
 //         attack: number;
@@ -27,21 +33,20 @@ export interface iPokemonData {
 //         weight: number;
 //     }
 
-
 const PokemonsData = {
-  name_clean: "bulbasaur",
-  abilities: ["overgrow", "chlorophyll"],
+  name_clean: 'bulbasaur',
+  abilities: ['overgrow', 'chlorophyll'],
   stats: {
     hp: 45,
     attack: 49,
     defense: 49,
-    "special-attack": 65,
-    "special-defense": 65,
+    'special-attack': 65,
+    'special-defense': 65,
     speed: 45,
   },
-  types: ["grass", "poison"],
-  img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
-  name: "bulbasaur",
+  types: ['grass', 'poison'],
+  img: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png',
+  name: 'bulbasaur',
   base_experience: 64,
   height: 7,
   id: 1,
@@ -49,6 +54,8 @@ const PokemonsData = {
   order: 1,
   weight: 69,
 };
+
+export type ITypesRequest = string[];
 
 export type Ipokemon = typeof PokemonsData;
 
